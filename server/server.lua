@@ -66,3 +66,8 @@ RegisterServerEvent('norp_vangelico:allnotify')
 AddEventHandler('norp_vangelico:allnotify', function(players)
     TriggerClientEvent('ox_inventory:notify', players, {type = 'success', text = 'Security systems will be online in 10 minutes!'})
 end)
+
+RegisterServerEvent('norp_vangelico:policenotify')
+AddEventHandler('norp_vangelico:policenotify', function()
+    TriggerClientEvent('norp_vangelico:policenotify', -1)    
+end)

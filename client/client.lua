@@ -23,6 +23,21 @@ AddEventHandler('esx:setJob', function(job)
     PlayerData.job = job
 end)
 
+function UnAuthJob()
+	while ESX == nil do
+		Citizen.Wait(0)
+	end
+	local UnAuthjob = false
+	for i,v in pairs(Config.UnAuthJobs) do
+		if PlayerData.job.name == v then
+			UnAuthjob = true
+			break
+		end
+	end
+
+	return UnAuthjob
+end
+
 local CircleZone = CircleZone:Create(vector3(-596.30, -283.90, 50.3236), 1.0, {
     name="circle_zone",
     debugPoly=false,
@@ -570,7 +585,7 @@ Citizen.CreateThread(function()
         if jewelry1 and jewelry2 and jewelry3 and jewelry4 and jewelry5 and jewelry6 and jewelry7 and jewelry8 and jewelry9 and jewelry10 and jewelry11 and jewelry12 and jewelry13 and jewelry14 and jewelry15 and jewelry16 and jewelry17 and jewelry18 and jewelry19 and jewelry20 then
             sleep = 0
             for i = 1, #players, 1 do
-                TriggerServerEvent('norp_vangelico:allnotify', GetPlayerServerId(players[i]))
+                TriggerServerEvent('norp_vangelico:allnotify', GetPlayerServerId(players))
             end
             Citizen.Wait(600000)
             ExecuteCommand('vdoors 1')
@@ -604,6 +619,7 @@ function CreateTargets()
             {
                 name = 'Case_Zone'..k,
                 heading = v.heading,
+                debugPoly = true,
                 minZ = v.zcoords[1],
                 maxZ = v.zcoords[2],
             }, {
@@ -613,11 +629,39 @@ function CreateTargets()
                     event = v.event,
     
                 }},
-                distance = 2.0
+                distance = 1.5
             }
         )
     end
 end
+
+RegisterNetEvent('norp_vangelico:policenotify')
+AddEventHandler('norp_vangelico:policenotify', function()
+	for i, v in pairs(Config.PoliceJobs) do
+		if  PlayerData.job.name == v then  
+			ESX.ShowAdvancedNotification('911 Emergency', 'Silent Alarm' , 'Vangelico Jewelry Store', 'CHAR_CALL911', 1)
+			TriggerEvent('norp_vangelico:alarmBlip')
+		end
+	end
+end)
+
+AddEventHandler('norp_vangelico:alarmBlip', function()
+	local transT = 250
+	local Blip = AddBlipForCoord(-634.02, -239.49, 38)
+	SetBlipSprite(Blip,  10)
+	SetBlipColour(Blip,  1)
+	SetBlipAlpha(Blip,  transT)
+	SetBlipAsShortRange(Blip,  false)
+	while transT ~= 0 do
+		Wait(100)
+		transT = transT - 1
+		SetBlipAlpha(Blip,  transT)
+		if transT == 0 then
+			SetBlipSprite(Blip,  2)
+			return
+		end
+	end
+end)
 
 AddEventHandler('onResourceStart', function(resourceName)
 	if (resourceName == GetCurrentResourceName() and Config.Debug) then

@@ -184,3 +184,14 @@ Config.ItemDrops  = {
     { name = 'WEAPON_SMG', chance = 40 },
     { name = 'WEAPON_CROWBAR', chance = 18 },
  }
+
+ Config.PoliceJobs =  {
+    'police',
+    'sheriff',
+ }
+
+ Config.UnAuthJobs = {
+    'police', 
+    'sheriff', 
+    'ambulance', 
+ }
