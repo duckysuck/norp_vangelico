@@ -38,6 +38,20 @@ function UnAuthJob()
 	return UnAuthjob
 end
 
+Citizen.CreateThread(function()
+    if Config.showblip == true then
+        local blip = AddBlipForCoord(Config.blipcoords)
+        SetBlipSprite(blip, 617)
+        SetBlipColour(blip, 24)
+        SetBlipScale(blip, 0.8)
+        SetBlipAsShortRange(blip, true)
+        SetBlipDisplay(blip, 4)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString("Vangelico Jewelry")
+        EndTextCommandSetBlipName(blip)
+    end
+end)
+
 local CircleZone = CircleZone:Create(vector3(-596.30, -283.90, 50.3236), 1.0, {
     name="circle_zone",
     debugPoly=false,
