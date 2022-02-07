@@ -6,6 +6,9 @@ Config.MinPolice = 0
 
 Config.ResetTime = 60
 
+Config.showblip = true
+Config.blipcoords = vector3(-622.6827, -231.3588, 38.0570)
+
 Config.Doors = {
     [1] = {
         Model       = 1425919976,
