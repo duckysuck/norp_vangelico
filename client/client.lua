@@ -39,8 +39,8 @@ function UnAuthJob()
 end
 
 Citizen.CreateThread(function()
-    if Config.showblip == true then
-        local blip = AddBlipForCoord(Config.blipcoords)
+    if Config.ShowBlip == true then
+        local blip = AddBlipForCoord(Config.BlipCoords)
         SetBlipSprite(blip, 617)
         SetBlipColour(blip, 24)
         SetBlipScale(blip, 0.8)
