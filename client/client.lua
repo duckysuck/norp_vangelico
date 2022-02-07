@@ -340,7 +340,7 @@ end)
 
 AddEventHandler('norp_vangelico:alarmBlip', function()
 	local transT = 250
-	local Blip = AddBlipForCoord(-634.02, -239.49, 38)
+	local Blip = AddBlipForCoord(Config.BlipCoords)
 	SetBlipSprite(Blip,  10)
 	SetBlipColour(Blip,  1)
 	SetBlipAlpha(Blip,  transT)
