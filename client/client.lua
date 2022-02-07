@@ -85,47 +85,48 @@ AddEventHandler('norp_vangelico:thermite', function()
         exports['memorygame']:thermiteminigame(10, 3, 3, 10,
         function() -- success
             --print("success")
-            local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(PlayerPedId())))
-            local bagscene = NetworkCreateSynchronisedScene(-596.14, -283.74, 50.3236, rotx, roty, rotz + 1.1, 2, false, false, 1065353216, 0, 1.3)
-            local bag = CreateObject(GetHashKey('hei_p_m_bag_var22_arm_s'), -596.14, -283.74, 50.3236,  true,  true, false)
+                FirstLoadup() -- creating the targets
+                local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(PlayerPedId())))
+                local bagscene = NetworkCreateSynchronisedScene(-596.14, -283.74, 50.3236, rotx, roty, rotz + 1.1, 2, false, false, 1065353216, 0, 1.3)
+                local bag = CreateObject(GetHashKey('hei_p_m_bag_var22_arm_s'), -596.14, -283.74, 50.3236,  true,  true, false)
 
-            SetEntityCollision(bag, false, true)
-            NetworkAddPedToSynchronisedScene(PlayerPedId(), bagscene, 'anim@heists@ornate_bank@thermal_charge', 'thermal_charge', 1.2, -4.0, 1, 16, 1148846080, 0)
-            NetworkAddEntityToSynchronisedScene(bag, bagscene, 'anim@heists@ornate_bank@thermal_charge', 'bag_thermal_charge', 4.0, -8.0, 1)
-            SetPedComponentVariation(PlayerPedId(), 5, 0, 0, 0)
-            NetworkStartSynchronisedScene(bagscene)
-            Citizen.Wait(1500)
-            local x, y, z = table.unpack(GetEntityCoords(PlayerPedId()))
-            local thermite = CreateObject(GetHashKey('hei_prop_heist_thermite'), x, y, z + 0.3,  true,  true, true)
+                SetEntityCollision(bag, false, true)
+                NetworkAddPedToSynchronisedScene(PlayerPedId(), bagscene, 'anim@heists@ornate_bank@thermal_charge', 'thermal_charge', 1.2, -4.0, 1, 16, 1148846080, 0)
+                NetworkAddEntityToSynchronisedScene(bag, bagscene, 'anim@heists@ornate_bank@thermal_charge', 'bag_thermal_charge', 4.0, -8.0, 1)
+                SetPedComponentVariation(PlayerPedId(), 5, 0, 0, 0)
+                NetworkStartSynchronisedScene(bagscene)
+                Citizen.Wait(1500)
+                local x, y, z = table.unpack(GetEntityCoords(PlayerPedId()))
+                local thermite = CreateObject(GetHashKey('hei_prop_heist_thermite'), x, y, z + 0.3,  true,  true, true)
 
-            SetEntityCollision(thermite, false, true)
-            AttachEntityToEntity(thermite, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
-            Citizen.Wait(2000)
-            DeleteObject(bag)
-            SetPedComponentVariation(PlayerPedId(), 5, 45, 0, 0)
-            DetachEntity(thermite, 1, 1)
-            FreezeEntityPosition(thermite, true)
-            TriggerServerEvent('norp_vangelico:particleserver', method)
-			SetPtfxAssetNextCall('scr_ornate_heist')
-            local effect = StartParticleFxLoopedAtCoord('scr_heist_ornate_thermal_burn', -596.14, -282.74, 50.3236, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+                SetEntityCollision(thermite, false, true)
+                AttachEntityToEntity(thermite, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
+                Citizen.Wait(2000)
+                DeleteObject(bag)
+                SetPedComponentVariation(PlayerPedId(), 5, 45, 0, 0)
+                DetachEntity(thermite, 1, 1)
+                FreezeEntityPosition(thermite, true)
+                TriggerServerEvent('norp_vangelico:particleserver', method)
+                SetPtfxAssetNextCall('scr_ornate_heist')
+                local effect = StartParticleFxLoopedAtCoord('scr_heist_ornate_thermal_burn', -596.14, -282.74, 50.3236, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
 
-            
-            NetworkStopSynchronisedScene(bagscene)
-            TaskPlayAnim(PlayerPedId(), 'anim@heists@ornate_bank@thermal_charge', 'cover_eyes_intro', 8.0, 8.0, 1000, 36, 1, 0, 0, 0)
-            TaskPlayAnim(PlayerPedId(), 'anim@heists@ornate_bank@thermal_charge', 'cover_eyes_loop', 8.0, 8.0, 3000, 49, 1, 0, 0, 0)
-            Citizen.Wait(10000)
-            ClearPedTasks(PlayerPedId())
-            DeleteObject(thermite)
-            StopParticleFxLooped(effect, 0)
-            successful = true
-            TriggerServerEvent('norp_vangelico:thermitedelete')
-			ExecuteCommand('vdoors 1')
-            ExecuteCommand('vdoors 2')
-			--DoorSystemSetDoorState(1425919976, 0, false, false)
-			--DoorSystemSetDoorState(9467943, 0, false, false)
+                
+                NetworkStopSynchronisedScene(bagscene)
+                TaskPlayAnim(PlayerPedId(), 'anim@heists@ornate_bank@thermal_charge', 'cover_eyes_intro', 8.0, 8.0, 1000, 36, 1, 0, 0, 0)
+                TaskPlayAnim(PlayerPedId(), 'anim@heists@ornate_bank@thermal_charge', 'cover_eyes_loop', 8.0, 8.0, 3000, 49, 1, 0, 0, 0)
+                Citizen.Wait(10000)
+                ClearPedTasks(PlayerPedId())
+                DeleteObject(thermite)
+                StopParticleFxLooped(effect, 0)
+                successful = true
+                TriggerServerEvent('norp_vangelico:thermitedelete')
+                ExecuteCommand('vdoors 1')
+                ExecuteCommand('vdoors 2')
+                --DoorSystemSetDoorState(1425919976, 0, false, false)
+                --DoorSystemSetDoorState(9467943, 0, false, false)
         end,
         function() -- failure
-			TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Thermite failed.'})
+            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Thermite failed.'})
             TriggerServerEvent('norp_vangelico:thermitedelete')
         end)
     end
@@ -169,27 +170,7 @@ local weaponTypes = {
 }
 
 --local _,wep = GetCurrentPedWeapon(playerPed)
-local jewelry1 = false
-local jewelry2 = false
-local jewelry3 = false
-local jewelry4 = false
-local jewelry5 = false
-local jewelry5 = false
-local jewelry6 = false
-local jewelry7 = false
-local jewelry8 = false
-local jewelry9 = false
-local jewelry10 = false
-local jewelry11 = false
-local jewelry12 = false
-local jewelry13 = false
-local jewelry14 = false
-local jewelry15 = false
-local jewelry16 = false
-local jewelry17 = false
-local jewelry18 = false
-local jewelry19 = false
-local jewelry20 = false
+local jewelry = false
 
 function weaponTypeC()
 	local w = GetSelectedPedWeapon(PlayerPedId())
@@ -235,7 +216,29 @@ local showcases = {
 	{x = -624.977, y = -227.884, z = 38.057, heading = 48.847, isOpen = false},--
 	{x = -624.056, y = -228.228, z = 38.057, heading = 216.443, isOpen = false},--
 }
-
+--[[
+local rayFires = {
+    {vector3(-627.735, -234.439, 37.875), "DES_Jewel_Cab"},
+    {vector3(-626.716, -233.685, 37.8583), "DES_Jewel_Cab"},
+    {vector3(-627.35, -234.947, 37.8531), "DES_Jewel_Cab3"},
+    {vector3(-626.298, -234.193, 37.8492), "DES_Jewel_Cab4"},
+    {vector3(-626.399, -239.132, 37.8616), "DES_Jewel_Cab2"},
+    {vector3(-625.376, -238.358, 37.8687), "DES_Jewel_Cab3"},
+    {vector3(-625.517, -227.421, 37.86), "DES_Jewel_Cab3"},
+    {vector3(-624.467, -226.653, 37.861), "DES_Jewel_Cab4"},
+    {vector3(-623.8118, -228.6336, 37.8522), "DES_Jewel_Cab2"},
+    {vector3(-624.1267, -230.7476, 37.8618), "DES_Jewel_Cab4"},
+    {vector3(-621.7181, -228.9636, 37.8425), "DES_Jewel_Cab3"},
+    {vector3(-622.7541, -232.614, 37.8638), "DES_Jewel_Cab"},
+    {vector3(-620.3262, -230.829, 37.8578), "DES_Jewel_Cab"},
+    {vector3(-620.6465, -232.9308, 37.8407), "DES_Jewel_Cab4"},
+    {vector3(-619.978, -234.93, 37.8537), "DES_Jewel_Cab"},
+    {vector3(-618.937, -234.16, 37.8425), "DES_Jewel_Cab3"},
+    {vector3(-620.163, -226.212, 37.8266), "DES_Jewel_Cab"},
+    {vector3(-619.384, -227.259, 37.8342), "DES_Jewel_Cab2"},
+    {vector3(-618.019, -229.115, 37.8302), "DES_Jewel_Cab3"},
+    {vector3(-617.249, -230.156, 37.8201), "DES_Jewel_Cab2"},
+}]]
 function animation()
 	local playerPos = GetEntityCoords(PlayerPedId(), true)
     loadAnimDict('missheist_jewel')
@@ -248,9 +251,11 @@ function animation()
                 RequestNamedPtfxAsset('scr_jewelheist')
                 Citizen.Wait(0)
             end
+            Wait(250)
             PlaySoundFromCoord(-1, 'Glass_Smash', playerPos.x, playerPos.y, playerPos.z, "", 0, 2.0, 0)
             SetPtfxAssetNextCall('scr_jewelheist')
             StartParticleFxLoopedAtCoord('scr_jewel_cab_smash', v.x, v.y, v.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+            GetRayfireMapObject(v.x, v.y, v.z, 1, "DES_Jewel_Cab")
                 
             Citizen.Wait(5000)
             ClearPedTasks(PlayerPedId())
@@ -258,331 +263,24 @@ function animation()
     end
 end
 
-RegisterNetEvent('norp_vangelico:loot1')
-AddEventHandler('norp_vangelico:loot1', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry1 then
+RegisterNetEvent('norp_vangelico:loot')
+AddEventHandler('norp_vangelico:loot', function(name)
+    if successful and weaponTypeC() > 1 then
             animation()
             giveitems()
-            jewelry1 = true
-        else
-			TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
+            jewelry = true
+            exports.qtarget:RemoveZone('Case_Zone'..name)
     else
 		TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry1 = false
     end
 end)
 
-RegisterNetEvent('norp_vangelico:loot2')
-AddEventHandler('norp_vangelico:loot2', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry2 then
-            animation()
-            giveitems()
-            jewelry2 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry2 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot3')
-AddEventHandler('norp_vangelico:loot3', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry3 then
-            animation()
-            giveitems()
-            jewelry3 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry3 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot4')
-AddEventHandler('norp_vangelico:loot4', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry4 then
-            animation()
-            giveitems()
-            jewelry4 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry4 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot5')
-AddEventHandler('norp_vangelico:loot5', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry5 then
-            animation()
-            giveitems()
-            jewelry5 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry5 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot6')
-AddEventHandler('norp_vangelico:loot6', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry6 then
-            animation()
-            giveitems()
-            jewelry6 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry6 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot7')
-AddEventHandler('norp_vangelico:loot7', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry7 then
-            animation()
-            giveitems()
-            jewelry7 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry7 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot8')
-AddEventHandler('norp_vangelico:loot8', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry8 then
-            animation()
-            giveitems()
-            jewelry8 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry8 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot9')
-AddEventHandler('norp_vangelico:loot9', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry9 then
-            animation()
-            giveitems()
-            jewelry9 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry9 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot10')
-AddEventHandler('norp_vangelico:loot10', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry10 then
-            animation()
-            giveitems()
-            jewelry10 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry10 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot11')
-AddEventHandler('norp_vangelico:loot11', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry11 then
-            animation()
-            giveitems()
-            jewelry11 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry11 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot12')
-AddEventHandler('norp_vangelico:loot12', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry12 then
-            animation()
-            giveitems()
-            jewelry12 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry12 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot13')
-AddEventHandler('norp_vangelico:loot13', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry13 then
-            animation()
-            giveitems()
-            jewelry13 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry13 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot14')
-AddEventHandler('norp_vangelico:loot14', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry14 then
-            animation()
-            giveitems()
-            jewelry14 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry14 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot15')
-AddEventHandler('norp_vangelico:loot15', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry15 then
-            animation()
-            giveitems()
-            jewelry15 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry15 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot16')
-AddEventHandler('norp_vangelico:loot16', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry16 then
-            animation()
-            giveitems()
-            jewelry16 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry16 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot17')
-AddEventHandler('norp_vangelico:loot17', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry17 then
-            animation()
-            giveitems()
-            jewelry17 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry17 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot18')
-AddEventHandler('norp_vangelico:loot18', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry18 then
-            animation()
-            giveitems()
-            jewelry18 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry18 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot19')
-AddEventHandler('norp_vangelico:loot19', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry19 then
-            animation()
-            giveitems()
-            jewelry19 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry19 = false
-    end
-end)
-
-RegisterNetEvent('norp_vangelico:loot20')
-AddEventHandler('norp_vangelico:loot20', function()
-    if weaponTypeC() > 1 and successful then
-        if not jewelry20 then
-            animation()
-            giveitems()
-            jewelry20 = true
-        else
-            TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Already looted this case.'})
-        end
-    else
-        TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Try something stronger than your fists.'})
-        jewelry20 = false
-    end
-end)
 
 Citizen.CreateThread(function()
     while true do
         local sleep = 1000
         local players, nearbyPlayer = ESX.Game.GetPlayersInArea(GetEntityCoords(PlayerPedId()), 50)
-        if jewelry1 and jewelry2 and jewelry3 and jewelry4 and jewelry5 and jewelry6 and jewelry7 and jewelry8 and jewelry9 and jewelry10 and jewelry11 and jewelry12 and jewelry13 and jewelry14 and jewelry15 and jewelry16 and jewelry17 and jewelry18 and jewelry19 and jewelry20 then
+        if jewelry then
             sleep = 0
             for i = 1, #players, 1 do
                 TriggerServerEvent('norp_vangelico:allnotify', GetPlayerServerId(players))
@@ -626,10 +324,16 @@ function CreateTargets()
                 options = {{
                     icon = 'fas fa-gem', 
                     label = 'Steal Jewels',
-                    event = v.event,
+                    --event = v.event,
+                    action = function()
+                        local name = k
+                        TriggerEvent('norp_vangelico:loot', name)
+                        Wait(1000)
+                        
+                    end
     
                 }},
-                distance = 1.5
+                distance = 1.2
             }
         )
     end
@@ -668,8 +372,13 @@ AddEventHandler('onResourceStart', function(resourceName)
         while (ESX == nil) do Citizen.Wait(100) end        
         Citizen.Wait(5000)
         ESX.PlayerLoaded = true
-        FirstLoadup()
 	end
+end)
+
+AddEventHandler('onResourceStop', function()
+	for k,v in pairs(Config.Showcases) do
+        exports.qtarget:RemoveZone('Case_Zone'..k)
+    end
 end)
 
 RegisterNetEvent('esx:playerLoaded')
@@ -678,7 +387,6 @@ AddEventHandler('esx:playerLoaded', function(xPlayer)
     Citizen.Wait(5000)
     ESX.PlayerData = xPlayer
  	ESX.PlayerLoaded = true
-    FirstLoadup()
 end)
 
 RegisterNetEvent('esx:onPlayerLogout')
