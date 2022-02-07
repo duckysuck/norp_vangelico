@@ -10,12 +10,12 @@ Config.showblip = true
 Config.blipcoords = vector3(-622.6827, -231.3588, 38.0570)
 
 Config.Doors = {
-    leftdoor = {
+    [1] = {
         Model       = 1425919976,
         Coordinates = vector3(-631.9554, -236.3333, 38.20653),
         Locked      = true,
     },
-    rightdoor = {
+    [2] = {
         Model       = 9467943,
         Coordinates = vector3(-630.4265, -238.4375, 38.20653),
         Locked      = true,
