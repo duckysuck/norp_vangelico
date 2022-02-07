@@ -3,6 +3,21 @@ ESX = nil
 local canthermite = false
 local successful = false
 
+
+Citizen.CreateThread(function()
+    if Config.ShowBlip == true then
+        local blip = AddBlipForCoord(Config.BlipCoords)
+        SetBlipSprite(blip, 617)
+        SetBlipColour(blip, 24)
+        SetBlipScale(blip, 0.8)
+        SetBlipAsShortRange(blip, true)
+        SetBlipDisplay(blip, 4)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString("Vangelico Jewelry")
+        EndTextCommandSetBlipName(blip)
+    end
+end)
+
 Citizen.CreateThread(function()
     while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -38,20 +53,6 @@ function UnAuthJob()
 	return UnAuthjob
 end
 
-Citizen.CreateThread(function()
-    if Config.ShowBlip == true then
-        local blip = AddBlipForCoord(Config.BlipCoords)
-        SetBlipSprite(blip, 617)
-        SetBlipColour(blip, 24)
-        SetBlipScale(blip, 0.8)
-        SetBlipAsShortRange(blip, true)
-        SetBlipDisplay(blip, 4)
-        BeginTextCommandSetBlipName("STRING")
-        AddTextComponentString("Vangelico Jewelry")
-        EndTextCommandSetBlipName(blip)
-    end
-end)
-
 local CircleZone = CircleZone:Create(vector3(-596.30, -283.90, 50.3236), 1.0, {
     name="circle_zone",
     debugPoly=false,
@@ -80,7 +81,6 @@ AddEventHandler('norp_vdoors:initialize', function(allDoors)
         DoorSystemSetDoorState(doorId, door.Locked and 1 or 0)
     end
 end)
-
 RegisterNetEvent('norp_vangelico:thermite')
 AddEventHandler('norp_vangelico:thermite', function()
     local playercoords = GetEntityCoords(PlayerPedId())
@@ -230,29 +230,7 @@ local showcases = {
 	{x = -624.977, y = -227.884, z = 38.057, heading = 48.847, isOpen = false},--
 	{x = -624.056, y = -228.228, z = 38.057, heading = 216.443, isOpen = false},--
 }
---[[
-local rayFires = {
-    {vector3(-627.735, -234.439, 37.875), "DES_Jewel_Cab"},
-    {vector3(-626.716, -233.685, 37.8583), "DES_Jewel_Cab"},
-    {vector3(-627.35, -234.947, 37.8531), "DES_Jewel_Cab3"},
-    {vector3(-626.298, -234.193, 37.8492), "DES_Jewel_Cab4"},
-    {vector3(-626.399, -239.132, 37.8616), "DES_Jewel_Cab2"},
-    {vector3(-625.376, -238.358, 37.8687), "DES_Jewel_Cab3"},
-    {vector3(-625.517, -227.421, 37.86), "DES_Jewel_Cab3"},
-    {vector3(-624.467, -226.653, 37.861), "DES_Jewel_Cab4"},
-    {vector3(-623.8118, -228.6336, 37.8522), "DES_Jewel_Cab2"},
-    {vector3(-624.1267, -230.7476, 37.8618), "DES_Jewel_Cab4"},
-    {vector3(-621.7181, -228.9636, 37.8425), "DES_Jewel_Cab3"},
-    {vector3(-622.7541, -232.614, 37.8638), "DES_Jewel_Cab"},
-    {vector3(-620.3262, -230.829, 37.8578), "DES_Jewel_Cab"},
-    {vector3(-620.6465, -232.9308, 37.8407), "DES_Jewel_Cab4"},
-    {vector3(-619.978, -234.93, 37.8537), "DES_Jewel_Cab"},
-    {vector3(-618.937, -234.16, 37.8425), "DES_Jewel_Cab3"},
-    {vector3(-620.163, -226.212, 37.8266), "DES_Jewel_Cab"},
-    {vector3(-619.384, -227.259, 37.8342), "DES_Jewel_Cab2"},
-    {vector3(-618.019, -229.115, 37.8302), "DES_Jewel_Cab3"},
-    {vector3(-617.249, -230.156, 37.8201), "DES_Jewel_Cab2"},
-}]]
+
 function animation()
 	local playerPos = GetEntityCoords(PlayerPedId(), true)
     loadAnimDict('missheist_jewel')
@@ -265,17 +243,16 @@ function animation()
                 RequestNamedPtfxAsset('scr_jewelheist')
                 Citizen.Wait(0)
             end
-            Wait(250)
             PlaySoundFromCoord(-1, 'Glass_Smash', playerPos.x, playerPos.y, playerPos.z, "", 0, 2.0, 0)
             SetPtfxAssetNextCall('scr_jewelheist')
             StartParticleFxLoopedAtCoord('scr_jewel_cab_smash', v.x, v.y, v.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
-            GetRayfireMapObject(v.x, v.y, v.z, 1, "DES_Jewel_Cab")
                 
             Citizen.Wait(5000)
             ClearPedTasks(PlayerPedId())
         end
     end
 end
+
 
 RegisterNetEvent('norp_vangelico:loot')
 AddEventHandler('norp_vangelico:loot', function(name)
@@ -342,12 +319,10 @@ function CreateTargets()
                     action = function()
                         local name = k
                         TriggerEvent('norp_vangelico:loot', name)
-                        Wait(1000)
-                        
                     end
     
                 }},
-                distance = 1.2
+                distance = 1.5
             }
         )
     end
