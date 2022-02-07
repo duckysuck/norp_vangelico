@@ -13,7 +13,8 @@ description  'Vangelico Robbery'
 --[[ Manifest ]]--
 dependencies {
 	'PolyZone',
-	'qtarget'
+	'qtarget',
+	'memorygame'
 }
 
 shared_scripts {
