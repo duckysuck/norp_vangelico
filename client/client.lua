@@ -100,9 +100,6 @@ AddEventHandler('norp_vangelico:thermite', function()
         function() -- success
             --print("success")
                 FirstLoadup() -- creating the targets
-		if Config.UseAlarmSound == true then
-		Alarm()
-		end
                 local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(PlayerPedId())))
                 local bagscene = NetworkCreateSynchronisedScene(-596.14, -283.74, 50.3236, rotx, roty, rotz + 1.1, 2, false, false, 1065353216, 0, 1.3)
                 local bag = CreateObject(GetHashKey('hei_p_m_bag_var22_arm_s'), -596.14, -283.74, 50.3236,  true,  true, false)
@@ -143,6 +140,9 @@ AddEventHandler('norp_vangelico:thermite', function()
                 --DoorSystemSetDoorState(9467943, 0, false, false)
         end,
         function() -- failure
+		if Config.UseAlarmSound == true then
+		Alarm()
+		end
             TriggerEvent('ox_inventory:notify', {type = 'error', text = 'Thermite failed.'})
             TriggerServerEvent('norp_vangelico:thermitedelete')
         end)
