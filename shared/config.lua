@@ -8,6 +8,7 @@ Config.ResetTime = 60
 
 Config.ShowBlip = true
 Config.BlipCoords = vector3(-622.6827, -231.3588, 38.0570)
+Config.UseAlarm = true
 
 Config.Doors = {
     [1] = {
