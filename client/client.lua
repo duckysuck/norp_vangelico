@@ -246,9 +246,11 @@ function animation()
                 RequestNamedPtfxAsset('scr_jewelheist')
                 Citizen.Wait(0)
             end
+	    Wait(250)
             PlaySoundFromCoord(-1, 'Glass_Smash', playerPos.x, playerPos.y, playerPos.z, "", 0, 2.0, 0)
             SetPtfxAssetNextCall('scr_jewelheist')
             StartParticleFxLoopedAtCoord('scr_jewel_cab_smash', v.x, v.y, v.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+	    GetRayFireMapObject(vector3(v.x, v.y, v.z), 1, v.rayfire)
                 
             Citizen.Wait(5000)
             ClearPedTasks(PlayerPedId())
