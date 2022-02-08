@@ -100,6 +100,9 @@ AddEventHandler('norp_vangelico:thermite', function()
         function() -- success
             --print("success")
                 FirstLoadup() -- creating the targets
+		if Config.UseAlarmSound == true then
+		Alarm()
+		end
                 local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(PlayerPedId())))
                 local bagscene = NetworkCreateSynchronisedScene(-596.14, -283.74, 50.3236, rotx, roty, rotz + 1.1, 2, false, false, 1065353216, 0, 1.3)
                 local bag = CreateObject(GetHashKey('hei_p_m_bag_var22_arm_s'), -596.14, -283.74, 50.3236,  true,  true, false)
@@ -355,6 +358,30 @@ AddEventHandler('norp_vangelico:alarmBlip', function()
 		end
 	end
 end)
+
+function Alarm()
+    exports.xsound:PlayUrlPos('alarm', 'SOUND URL HERE', 0.5, vector3(POSITIONALARM), true)
+    exports.qtarget:AddBoxZone("Alarmbutton", vector3(ALARM.BOX.COORDS), 0.30, 0.20, {
+        name="Alarmbutton",
+        heading=0.0,
+        debugPoly=true,
+        minZ=30.77834,
+        maxZ=30.87834,
+        }, {
+            options = {
+                {
+                    icon = "fas fa-sign-in-alt",
+                    label = "Disable alarm",
+                    action = function()
+                        --"Possible minigame to stop alarm"
+                        exports.xsound:Destroy('alarm')
+                    end
+                },
+            },
+            distance = 1.5
+    })
+end
+
 
 AddEventHandler('onResourceStart', function(resourceName)
 	if (resourceName == GetCurrentResourceName() and Config.Debug) then
