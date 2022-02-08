@@ -370,7 +370,7 @@ function Alarm()
         }, {
             options = {
                 {
-                    icon = "fas fa-sign-in-alt",
+                    icon = "fas fa-bell",
                     label = "Disable alarm",
                     action = function()
                         --"Possible minigame to stop alarm"
